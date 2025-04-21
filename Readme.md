@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Шохрух Якубов](https://up.htmlacademy.ru/javascript-individual/2/user/2603893).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгения П.](https://github.com/eepodoprigora).
 
 ---
 
