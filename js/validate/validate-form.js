@@ -92,27 +92,26 @@ pristine.addValidator(descriptionInput, validateComment, 'Максимальна
 
 export const setUserFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
     const isValid = pristine.validate();
     if (!isValid) {
-      pristine.validate();
-      evt.preventDefault();
-    } else {
-      evt.preventDefault();
-      blockSubmitButton();
-      sendData(new FormData(evt.target))
-        .then(() => {
-          onSuccess('.img-upload__overlay');
-          createMessage('success');
-          evt.target.reset();
-          pristine.reset();
-        })
-        .catch(() => {
-          createMessage('error');
-        })
-        .finally(() => {
-          unblockSubmitButton();
-        });
+      return;
     }
+
+    blockSubmitButton();
+    sendData(new FormData(evt.target))
+      .then(() => {
+        onSuccess('.img-upload__overlay');
+        createMessage('success');
+        evt.target.reset();
+        pristine.reset();
+      })
+      .catch(() => {
+        createMessage('error');
+      })
+      .finally(() => {
+        unblockSubmitButton();
+      });
   });
 };
 
