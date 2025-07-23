@@ -80,7 +80,7 @@ function validateHashtag(value) {
 }
 
 function validateComment(value) {
-  return value.length <= 137;
+  return value.length <= 140;
 }
 
 function getHashtagError() {

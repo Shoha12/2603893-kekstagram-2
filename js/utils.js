@@ -46,6 +46,7 @@ const createMessage = (selector) => {
   const selectorEl = clone.querySelector(`.${selector}`);
   const successBtn = selectorEl.querySelector(`.${selector}__button`);
 
+
   if (selector === 'data-error') {
     setTimeout(() => {
       if (document.body.contains(selectorEl)) {
