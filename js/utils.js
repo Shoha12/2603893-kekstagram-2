@@ -63,7 +63,7 @@ const createMessage = (selector) => {
   };
 
   const onClickOutside = (evt) => {
-    if (!evt.target.closest(`.${selector}-inner`)) {
+    if (!evt.target.closest(`.${selector}__inner`)) {
       closeMessage();
     }
   };
