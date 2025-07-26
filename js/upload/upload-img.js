@@ -1,5 +1,5 @@
 import { closeModal, openModal, showAlert, getMessageData, isEscapeKey} from '../utils';
-import { init } from './effects-img';
+import { init, resetEffects } from './effects-img';
 import { pristine } from '../validate/validate-form';
 
 const fileInput = document.querySelector('.img-upload__input');
@@ -13,13 +13,15 @@ const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 let onEscPress;
 
-const closeFilePhoto = () => {
+export const closeFilePhoto = () => {
   closeModal('.img-upload__overlay');
   init();
+  resetEffects();
   fileInput.value = '';
   scaleInput.value = '100%';
   hashtagInput.value = '';
   hashtagInput.style.outline = '';
+  previewImage.style.transform = '';
   commentInput.value = '';
   pristine.reset();
   closeBtn.removeEventListener('click', closeFilePhoto);
@@ -66,6 +68,10 @@ const handleFileChange = () => {
   }
 };
 
+const onFileInputChange = () => {
+  handleFileChange();
+};
+
 export const openFilePhoto = () => {
-  fileInput.addEventListener('change', handleFileChange);
+  fileInput.addEventListener('change', onFileInputChange);
 };

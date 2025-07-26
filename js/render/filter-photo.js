@@ -11,9 +11,9 @@ const clearPhotos = () => {
   });
 };
 
-const onFilterDataChange = debounce((filteredArray) => {
+const onFilterDataChange = debounce((filteredImages) => {
   clearPhotos();
-  renderPhoto(filteredArray);
+  renderPhoto(filteredImages);
 }, 500);
 
 const setActiveClass = (target) => {
@@ -25,7 +25,7 @@ const setActiveClass = (target) => {
 
 const handleFilterClick = (evt) => {
   const target = evt.target;
-  let filteredArray = [];
+  let filteredImages = [];
 
   setActiveClass(target);
 
@@ -34,20 +34,24 @@ const handleFilterClick = (evt) => {
   }
 
   if(target.matches('#filter-random')) {
-    filteredArray = [...getAllPhotos()];
-    shuffleArray(filteredArray);
-    filteredArray = filteredArray.slice(0, 10);
+    filteredImages = [...getAllPhotos()];
+    shuffleArray(filteredImages);
+    filteredImages = filteredImages.slice(0, 10);
   } else if (target.matches('#filter-discussed')) {
-    filteredArray = [...getAllPhotos()].sort((a, b) => b.comments.length - a.comments.length);
+    filteredImages = [...getAllPhotos()].sort((a, b) => b.comments.length - a.comments.length);
   } else if (target.matches('#filter-default')) {
-    filteredArray = [...getAllPhotos()];
+    filteredImages = [...getAllPhotos()];
   }
 
-  onFilterDataChange(filteredArray);
+  onFilterDataChange(filteredImages);
+};
+
+const onFilterFormClick = (evt) => {
+  handleFilterClick(evt);
 };
 
 export const initFilter = () => {
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
-  filterForm.addEventListener('click', handleFilterClick);
+  filterForm.addEventListener('click', onFilterFormClick);
 };
 

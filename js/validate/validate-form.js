@@ -1,5 +1,6 @@
 import { createMessage } from '../utils';
 import { sendData } from '../api';
+import { closeFilePhoto } from '../upload/upload-img';
 
 const form = document.querySelector('.img-upload__form');
 const hashtagInput = document.querySelector('.text__hashtags');
@@ -13,14 +14,9 @@ const submitButtonText = {
 
 let errorMessage = '';
 
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = submitButtonText.SENDING;
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = submitButtonText.IDLE;
+const setSubmitButtonState = (isDisabled) => {
+  submitButton.disabled = isDisabled;
+  submitButton.textContent = isDisabled ? submitButtonText.SENDING : submitButtonText.IDLE;
 };
 
 export const pristine = new Pristine(form, {
@@ -98,10 +94,11 @@ export const setUserFormSubmit = (onSuccess) => {
       return;
     }
 
-    blockSubmitButton();
+    setSubmitButtonState(true);
     sendData(new FormData(evt.target))
       .then(() => {
         onSuccess('.img-upload__overlay');
+        closeFilePhoto();
         createMessage('success');
         evt.target.reset();
         pristine.reset();
@@ -110,7 +107,7 @@ export const setUserFormSubmit = (onSuccess) => {
         createMessage('error');
       })
       .finally(() => {
-        unblockSubmitButton();
+        setSubmitButtonState(false);
       });
   });
 };

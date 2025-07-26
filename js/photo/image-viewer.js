@@ -46,11 +46,15 @@ const loadMoreComments = (photo) => {
 
 let onEscPress;
 
-const closeFullPhoto = () => {
+const onCloseButtonClick = () => {
+  closeFullPhoto();
+};
+
+function closeFullPhoto () {
   closeModal('.big-picture');
   document.removeEventListener('keydown', onEscPress);
-  closeButton.removeEventListener('click', closeFullPhoto);
-};
+  closeButton.removeEventListener('click', onCloseButtonClick);
+}
 
 
 const openFullPhoto = (photo) => {
@@ -83,7 +87,7 @@ const openFullPhoto = (photo) => {
   openModal('.big-picture');
 
   document.addEventListener('keydown', onEscPress);
-  closeButton.addEventListener('click', closeFullPhoto);
+  closeButton.addEventListener('click', onCloseButtonClick);
 };
 
 const initCommentsLoader = () => {
