@@ -8,16 +8,6 @@ export const setMessageData = (boolean) => {
 
 export const isEscapeKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-const getRandomArrayElement = (array) => array[getRandomInteger(0, array.length - 1)];
-
 const closeModal = (selector) => {
   document.querySelector(selector).classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -71,7 +61,7 @@ const createMessage = (selector) => {
     }
   };
 
-  const onClickOutside = (evt) => {
+  const onUploadOverlayClick = (evt) => {
     if (!evt.target.closest(`.${selector}__inner`)) {
       closeMessage();
     }
@@ -86,7 +76,7 @@ const createMessage = (selector) => {
     setMessageData(false);
 
     document.removeEventListener('keydown', onEscPress);
-    document.removeEventListener('click', onClickOutside);
+    document.removeEventListener('click', onUploadOverlayClick);
     if (successBtn) {
       successBtn.removeEventListener('click', onButtonClick);
     }
@@ -97,7 +87,7 @@ const createMessage = (selector) => {
   document.body.append(selectorEl);
 
   document.addEventListener('keydown', onEscPress);
-  document.addEventListener('click', onClickOutside);
+  document.addEventListener('click', onUploadOverlayClick);
 
   if (successBtn) {
     successBtn.addEventListener('click', onButtonClick);
@@ -122,4 +112,4 @@ const debounce = (callback, timeoutDelay) => {
 };
 
 
-export {getRandomInteger, getRandomArrayElement, closeModal, openModal, showAlert, shuffleArray, debounce, createMessage};
+export {closeModal, openModal, showAlert, shuffleArray, debounce, createMessage};
