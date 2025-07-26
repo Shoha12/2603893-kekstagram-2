@@ -1,5 +1,14 @@
 const ALERT_SHOW_TIME = 5000;
-export let isMessageOpen = false;
+let isMessageOpen = false;
+
+export const getMessageData = () => isMessageOpen;
+export const setMessageData = (boolean) => {
+  isMessageOpen = boolean;
+};
+
+export const isEscapeKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
+
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -56,7 +65,7 @@ const createMessage = (selector) => {
   }
 
   const onEscPress = (evt) => {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
+    if (isEscapeKey(evt)) {
       evt.stopPropagation();
       closeMessage();
     }
@@ -74,7 +83,7 @@ const createMessage = (selector) => {
 
   function closeMessage() {
     selectorEl.remove();
-    isMessageOpen = false;
+    setMessageData(false);
 
     document.removeEventListener('keydown', onEscPress);
     document.removeEventListener('click', onClickOutside);
@@ -83,7 +92,7 @@ const createMessage = (selector) => {
     }
   }
 
-  isMessageOpen = true;
+  setMessageData(true);
 
   document.body.append(selectorEl);
 

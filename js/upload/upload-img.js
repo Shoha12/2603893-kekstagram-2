@@ -1,4 +1,4 @@
-import { closeModal, openModal, showAlert, isMessageOpen } from '../utils';
+import { closeModal, openModal, showAlert, getMessageData, isEscapeKey} from '../utils';
 import { init } from './effects-img';
 import { pristine } from '../validate/validate-form';
 
@@ -9,8 +9,9 @@ const commentInput = document.querySelector('.text__description');
 const previewImage = document.querySelector('.img-upload__preview img');
 const previewImageEffects = document.querySelectorAll('.effects__preview');
 const scaleInput = document.querySelector('.scale__control--value');
-let onEscPress;
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
+let onEscPress;
 
 const closeFilePhoto = () => {
   closeModal('.img-upload__overlay');
@@ -46,7 +47,7 @@ const handleFileChange = () => {
       });
 
       onEscPress = (evt) => {
-        if ((evt.key === 'Escape' || evt.key === 'Esc') && !isMessageOpen) {
+        if (isEscapeKey(evt) && !getMessageData()) {
           const active = document.activeElement;
           if (active !== hashtagInput && active !== commentInput) {
             URL.revokeObjectURL(blobUrl);
